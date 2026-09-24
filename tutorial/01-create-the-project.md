@@ -193,19 +193,23 @@ In Step 02, we'll wipe out this sample counter code and build the real foundatio
 
 ---
 
-## Gotchas & Fixes
+## Common Mistakes
 
 ### 1. `flutter: command not found`
-* **What happened**: Your terminal doesn't know where Flutter was saved.
-* **The fix**: Add the Flutter SDK's `bin` folder to your shell profile (`~/.zshrc` on Mac, or System Environment Variables on Windows), then restart your terminal.
+* **The mistake**: Your computer doesn't know where the Flutter SDK is installed.
+* **The fix**: Add Flutter's `bin` directory to your shell path (`~/.zshrc` on macOS, or System Environment Variables on Windows), then restart your terminal.
 
-### 2. `No connected devices found`
-* **What happened**: No emulator is running and no phone is plugged in.
-* **The fix**: Open your emulator first, or run `flutter run -d chrome` to test right in your browser.
+### 2. Using capital letters or hyphens in project names
+* **The mistake**: Running `flutter create CourtBooker` or `flutter create court-booker`. Flutter will reject this with an error: `"court-booker" is not a valid Dart package name`.
+* **The fix**: Dart package names must be all lowercase with underscores (`snake_case`). Always use `flutter create court_booker`.
 
 ### 3. Running commands from the wrong directory
-* **What happened**: Running `flutter run` while still sitting in `~/Desktop` instead of `~/Desktop/court_booker`.
-* **The fix**: Type `pwd` (or `cd` on Windows) to see where you are. Make sure you're inside `court_booker`. If not, run `cd court_booker`.
+* **The mistake**: Running `flutter run` while sitting in your home directory or parent folder instead of inside `court_booker`. Flutter will complain: `No pubspec.yaml file found`.
+* **The fix**: Type `pwd` (Mac/Linux) or `cd` (Windows) to verify your current folder. Make sure you run `cd court_booker` before launching Flutter commands.
+
+### 4. `No connected devices found`
+* **The mistake**: Running `flutter run` without an active emulator, simulator, or plugged-in phone.
+* **The fix**: Launch an Android emulator or iOS simulator first, or run `flutter run -d chrome` or `flutter run -d macos` to test immediately on your desktop.
 
 ---
 

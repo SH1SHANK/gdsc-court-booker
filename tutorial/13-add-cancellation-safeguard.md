@@ -301,6 +301,30 @@ Let's test the entire reservation cycle from start to finish:
 
 ---
 
+## Common Mistakes
+
+### 1. Removing by object instance instead of by ID
+* **The mistake**: Writing `sessionBookings.remove(booking);`.
+* **What you see**: Sometimes nothing gets deleted, especially if the booking object was reconstructed in memory.
+* **The fix**: Use `removeWhere` comparing unique IDs: `sessionBookings.removeWhere((b) => b.id == booking.id)`. ID matching is completely reliable.
+
+### 2. Forgetting `setState()` around `removeWhere`
+* **The mistake**: Calling `sessionBookings.removeWhere(...)` without enclosing it in `setState(() { ... })`.
+* **What you see**: The booking is removed from the memory list, but the card stubbornly stays visible on your screen until you leave and revisit the page!
+* **The fix**: Always wrap data deletions in `setState()` so Flutter immediately redraws the list (or swaps to the empty state).
+
+### 3. Styling destructive buttons like neutral ones
+* **The mistake**: Using normal primary colors for the "Cancel Booking" button inside the alert dialog.
+* **What you see**: Users get confused because both buttons look identical, leading to accidental cancellations.
+* **The fix**: Use `TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.error)` to make destructive actions unmistakably red.
+
+### 4. Forgetting to pop the dialog before showing feedback
+* **The mistake**: Showing the SnackBar before calling `Navigator.of(dialogContext).pop()`.
+* **What you see**: The SnackBar renders behind the active dimmed dialog overlay instead of floating cleanly at the bottom of the screen.
+* **The fix**: Pop the dialog first (`Navigator.of(dialogContext).pop()`), then display the SnackBar on the screen.
+
+---
+
 ## Checkpoint
 
 You can move to Step 14 once:

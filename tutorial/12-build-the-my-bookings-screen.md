@@ -377,6 +377,30 @@ Save both files. Press **`r`** in your terminal for Hot Reload.
 
 ---
 
+## Common Mistakes
+
+### 1. Forgetting `itemCount` in `ListView.builder`
+* **The mistake**: Omitting `itemCount: sessionBookings.length`.
+* **What you see**: Flutter tries to build infinitely many list items. As soon as the index exceeds the list size, the app crashes with: `RangeError (index): Invalid value: Valid value range is empty: 0`.
+* **The fix**: Always provide `itemCount: sessionBookings.length` so `ListView.builder` knows exactly how many rows to produce.
+
+### 2. Forgetting the empty state check
+* **The mistake**: Jumping straight to `ListView.builder` without checking `if (sessionBookings.isEmpty)`.
+* **What you see**: When a student has no bookings, the screen is completely blank and white. They have no idea if the app is loading, broken, or empty.
+* **The fix**: Always handle the zero-data scenario first with a helpful visual empty state and an action button to guide them back to court listings.
+
+### 3. Calling `Navigator.pop` when `canPop` is false
+* **The mistake**: Writing `Navigator.pop(context)` on the "Browse Courts" button without checking if there is a screen behind it.
+* **What you see**: If the user reached "My Bookings" via `pushReplacement`, there might not be a previous route to pop, potentially exiting the app.
+* **The fix**: Guard with `if (Navigator.canPop(context)) Navigator.pop(context) else Navigator.pushReplacement(...)`.
+
+### 4. Nesting `ListView.builder` inside a `Column` without constraints
+* **The mistake**: Placing `ListView.builder` directly inside a `Column` without an `Expanded` widget.
+* **What you see**: Crash with `Vertical viewport was given unbounded height.`
+* **The fix**: Wrap the `ListView.builder` in an `Expanded` widget so Flutter knows how much vertical height the list is allowed to occupy.
+
+---
+
 ## Checkpoint
 
 You can move to Step 13 once:

@@ -99,7 +99,7 @@ Every chapter follows the same flow:
 2. **The Code**: Exact files to create or modify, with line-by-line breakdowns.
 3. **Run It**: Hot reload (`r`) or hot restart (`R`) to test right away.
 4. **Check Your Screen**: Exactly what you should see if things went right.
-5. **Gotchas & Fixes**: Common beginner slip-ups (missing semicolons, bracket mismatches) and how to fix them fast.
+5. **Common Mistakes**: Frequent beginner slip-ups, exact terminal errors, and how to fix them fast.
 
 ---
 

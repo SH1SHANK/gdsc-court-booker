@@ -196,6 +196,30 @@ Run `flutter run` and check off each feature live on your device or simulator:
 
 ---
 
+## Common Mistakes in Architecture & Testing
+
+### 1. Ignoring `flutter analyze` warnings
+* **The mistake**: Assuming that as long as the app runs on your screen, analyzer warnings don't matter.
+* **What you see**: Hidden bugs, such as unhandled nulls, unawaited `Future` calls, and unused memory variables that slow down your app over time.
+* **The fix**: Always run `flutter analyze` before committing. Treat warnings with the same respect as syntax errors and resolve them early.
+
+### 2. Mutating shared data inside reusable presentation widgets
+* **The mistake**: Writing `sessionBookings.removeWhere(...)` directly inside `BookingCard` instead of passing an `onCancel` callback.
+* **What you see**: `BookingCard` becomes tightly coupled to global state, making it impossible to test or reuse in different parts of your application.
+* **The fix**: Keep presentation widgets pure. Have them accept data via constructor parameters and report user actions upward through callbacks like `VoidCallback onCancel`.
+
+### 3. Hardcoding colors instead of using `Theme.of(context)`
+* **The mistake**: Writing `Color(0xFF1E6F5C)` or `Colors.green` directly in multiple files instead of `Theme.of(context).colorScheme.primary`.
+* **What you see**: When you decide to change your brand color or support Dark Mode, you have to find and replace values across dozens of files.
+* **The fix**: Reference your theme using `theme.colorScheme.primary`. Changing the seed color in `lib/main.dart` will automatically update every screen in your app.
+
+### 4. Only testing the "happy path"
+* **The mistake**: Only testing what happens when everything goes right (e.g. booking a court), and never testing cancellations or edge cases.
+* **What you see**: Empty states crash or throw assertion errors when zero items exist.
+* **The fix**: Write automated tests that cover the full lifecycle, including canceling the last item to verify the empty state appears as expected.
+
+---
+
 ## 15 Questions Every Flutter Beginner Should Be Able to Answer
 
 Can you explain these 15 fundamental concepts to a friend?

@@ -184,19 +184,26 @@ If it says `No issues found!`, your blueprints are solid.
 
 ---
 
-## Gotchas & Fixes
+## Common Mistakes
 
 ### 1. `Undefined class 'IconData'`
-* **What happened**: Missing `import 'package:flutter/material.dart';` at the top of `court.dart`.
-* **The fix**: Make sure the import is on line 1 of `court.dart`.
+* **The mistake**: Forgetting `import 'package:flutter/material.dart';` at the top of `lib/models/court.dart`.
+* **What you see**: Dart flags `IconData` as an unrecognized type because plain Dart doesn't know about Flutter icons.
+* **The fix**: Make sure line 1 of `lib/models/court.dart` imports `package:flutter/material.dart`.
 
-### 2. Missing commas inside the constructor
-* **What happened**: Forgetting commas between named parameters.
-* **The fix**: Inside `{ required this.id, required this.name, ... }`, end every parameter with a comma `,`.
+### 2. Missing commas inside the constructor parameter list
+* **The mistake**: Forgetting commas between named parameters inside the constructor braces `{ required this.id, required this.name ... }`.
+* **What you see**: `Expected to find ',' or '}'.`
+* **The fix**: Place a comma `,` after every single field inside the constructor braces.
 
-### 3. File in the wrong directory
-* **What happened**: Saving `court.dart` directly in `lib/` instead of `lib/models/`.
-* **The fix**: Check your file tree. The path must be `lib/models/court.dart`.
+### 3. Saving files directly in `lib/` instead of `lib/models/`
+* **The mistake**: Creating `court.dart` directly in `lib/` alongside `main.dart`.
+* **The fix**: Check your folder explorer. Create a folder named `models` inside `lib/`, and move `court.dart` and `booking.dart` inside `lib/models/`.
+
+### 4. Trying to reassign a `final` variable
+* **The mistake**: Later in code trying to write `court.name = 'New Name';`.
+* **What you see**: `The final variable 'name' can only be set once.`
+* **The fix**: `final` means immutable (read-only after creation). If you want an updated object, create a new instance with the updated value rather than mutating the existing one.
 
 ---
 

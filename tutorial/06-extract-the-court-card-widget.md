@@ -422,6 +422,30 @@ Look at your screen:
 
 ---
 
+## Common Mistakes
+
+### 1. Calling the callback immediately instead of passing it (`onTap: onTap()` vs `onTap: onTap`)
+* **The mistake**: Writing `onTap: _openCourtDetails(court)` with parentheses.
+* **What you see**: Every time the home screen builds or refreshes, all four SnackBars trigger simultaneously, but tapping the card later does nothing!
+* **The fix**: Do not invoke the function with `()`. Wrap it in an anonymous callback: `onTap: () => _openCourtDetails(court)`.
+
+### 2. Missing the spread operator `...` before `sampleCourts.map()`
+* **The mistake**: Writing `sampleCourts.map((court) => CourtCard(...))` directly inside `children: [ ... ]`.
+* **What you see**: Type error: `The element type 'Iterable<CourtCard>' can't be assigned to the list type 'Widget'.`
+* **The fix**: Put three dots `...` in front of `sampleCourts.map(...)`. The spread operator unrolls the iterable and inserts each widget individually into the children list.
+
+### 3. Missing clipping for ink ripple effects
+* **The mistake**: Putting an `InkWell` directly inside a `Container` with rounded corners.
+* **What you see**: The touch ripple bleeds outside the rounded corners of the card.
+* **The fix**: Wrap the `InkWell` in `ClipRRect(borderRadius: BorderRadius.circular(16))` or place it inside a `Card` widget.
+
+### 4. Text overflow on longer descriptions
+* **The mistake**: Leaving description `Text` widgets unconstrained.
+* **What you see**: On narrow devices, longer court descriptions push other elements off-screen and cause yellow-and-black striped overflow warnings.
+* **The fix**: Always specify `maxLines: 2` and `overflow: TextOverflow.ellipsis` on card text previews.
+
+---
+
 ## Checkpoint
 
 Move to Step 07 once:

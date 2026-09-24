@@ -214,6 +214,30 @@ Save `court_details_screen.dart`. Press **`r`** for Hot Reload.
 
 ---
 
+## Common Mistakes
+
+### 1. Forgetting `await` before `showDatePicker()`
+* **The mistake**: Writing `final picked = showDatePicker(...);` without `await`.
+* **What you see**: Dart flags a type mismatch error: `A value of type 'Future<DateTime?>' can't be assigned to a variable of type 'DateTime?'.`
+* **The fix**: `showDatePicker` is asynchronous because it takes time for the human to tap a date. Mark the function `async` and add `await`: `final picked = await showDatePicker(...);`.
+
+### 2. Setting `firstDate` after `initialDate` or `lastDate`
+* **The mistake**: Setting `firstDate: DateTime(2027)` when `initialDate` is today (`2026`).
+* **What you see**: Red screen crash with `Assertion failed: initialDate must be on or after firstDate`.
+* **The fix**: Always ensure `firstDate <= initialDate <= lastDate`. In our app: `firstDate: now` and `lastDate: now.add(const Duration(days: 30))`.
+
+### 3. Forgetting the `if (picked != null)` check
+* **The mistake**: Writing `setState(() { selectedDate = picked!; });` directly after the picker returns.
+* **What you see**: If the user taps "Cancel" or taps the dimmed background to dismiss the calendar, `picked` is `null`. The `!` operator throws a crash: `Null check operator used on a null value`.
+* **The fix**: Always guard your state update with `if (picked != null) { setState(() { selectedDate = picked; }); }`.
+
+### 4. Updating `selectedDate` outside `setState()`
+* **The mistake**: Updating `selectedDate = picked;` without wrapping it in `setState()`.
+* **What you see**: The calendar closes, but the card continues to show the old date because Flutter was never told to rebuild the screen.
+* **The fix**: Always enclose property updates inside `setState(() { selectedDate = picked; });`.
+
+---
+
 ## Checkpoint
 
 You can move to Step 10 once:

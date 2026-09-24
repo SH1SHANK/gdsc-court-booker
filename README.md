@@ -33,7 +33,7 @@ Full release notes, source code archives, and verified checksums are published o
 
 ## Executive Summary
 
-Court Booker is a mobile sports court booking application designed for university athletic complexes and student communities. The system addresses campus recreational scheduling bottlenecks—such as court crowding, uncertain slot availability, and coordination delays—by providing an open facility board with real-time slot tracking and reservation lifecycle management.
+Court Booker is a mobile sports court booking application designed for university athletic complexes and student communities. The system addresses campus recreational scheduling bottlenecks (such as court crowding, uncertain slot availability, and coordination delays) by providing an open facility board with real-time slot tracking and reservation lifecycle management.
 
 Engineered with Flutter's core framework primitives, the application demonstrates production-grade engineering principles: predictable unidirectional data flow, explicit state ownership, disciplined resource lifecycle management, dual-coded accessibility, and comprehensive widget test coverage without third-party dependencies.
 

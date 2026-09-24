@@ -265,15 +265,24 @@ Look at your screen:
 
 ---
 
-## Gotchas & Fixes
+## Common Mistakes
 
 ### 1. `The named parameter 'home' is required`
-* **What happened**: Typo in the `home:` parameter of `MaterialApp`.
-* **The fix**: Make sure `home: const HomeScreen(),` sits inside `MaterialApp(...)`.
+* **The mistake**: Typo in the `home:` parameter name of `MaterialApp`, or accidentally placing `HomeScreen()` outside `MaterialApp`.
+* **The fix**: Make sure `home: const HomeScreen(),` sits directly inside `MaterialApp(...)`.
 
-### 2. Yellow and black striped overflow box
-* **What happened**: Using `Column` for a long page instead of `ListView`.
-* **The fix**: The body of your `Scaffold` should be a `ListView`, which enables vertical scrolling automatically.
+### 2. Yellow and black striped overflow banner
+* **The mistake**: Using a plain `Column` as your top-level screen body instead of `ListView`. On smaller phones, fixed Columns cannot scroll and will overflow the bottom screen edge.
+* **The fix**: Always use `ListView` for long or variable-height pages so users can smoothly scroll vertically.
+
+### 3. Mixing up the two classes in a `StatefulWidget`
+* **The mistake**: Trying to write variables or helper methods inside the `HomeScreen` class instead of `_HomeScreenState`.
+* **The fix**: Remember the split: `HomeScreen` is the immutable configuration widget; `_HomeScreenState` is where the mutable data, lifecycle methods, and `build()` UI live.
+
+### 4. Changing variables without calling `setState()`
+* **The mistake**: Updating variables in memory directly (e.g. `count = count + 1;`) without wrapping the assignment in `setState(() { ... })`.
+* **What you see**: The internal data changes, but Flutter never repaints the screen, making the app appear broken.
+* **The fix**: Whenever data that affects what's visible on screen changes, always notify Flutter by enclosing the update in `setState()`.
 
 ---
 

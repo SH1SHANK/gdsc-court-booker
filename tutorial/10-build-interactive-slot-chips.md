@@ -251,6 +251,30 @@ Save `court_details_screen.dart`. Press **`r`** for Hot Reload.
 
 ---
 
+## Common Mistakes
+
+### 1. Using `Row` instead of `Wrap`
+* **The mistake**: Placing all time slot chips inside a single horizontal `Row`.
+* **What you see**: A screen overflow crash with a yellow-and-black striped banner: `A RenderFlex overflowed by 142 pixels on the right`.
+* **The fix**: Use `Wrap` with `spacing` and `runSpacing`. `Wrap` automatically moves chips to the next line when screen width runs out.
+
+### 2. Passing `() {}` instead of `null` to disable a button
+* **The mistake**: Writing `onPressed: isSlotSelected ? () => _proceed() : () {}`.
+* **What you see**: The button remains styled as active and clickable, even when no slot has been chosen.
+* **The fix**: In Flutter, a button is disabled when `onPressed` is explicitly `null`: `onPressed: isSlotSelected ? () => _proceed() : null`.
+
+### 3. Missing toggle-to-deselect logic
+* **The mistake**: Simply writing `selectedSlot = slot;` inside the chip's `onTap`.
+* **What you see**: Tapping a slot selects it, but tapping it a second time does nothing; the user has no way to deselect.
+* **The fix**: Use a ternary check: `selectedSlot = isSelected ? null : slot;`. If it's already selected, set it back to `null`.
+
+### 4. Hardcoding slot lists in the screen
+* **The mistake**: Re-typing `['09:00 AM', '10:00 AM', ...]` inside `_CourtDetailsScreenState` instead of using `widget.court.availableSlots`.
+* **What you see**: Every court shows the exact same schedule regardless of its actual facility data.
+* **The fix**: Always iterate over `widget.court.availableSlots.map(...)` so each venue displays its own unique timetable.
+
+---
+
 ## Checkpoint
 
 You can move to Step 11 once:

@@ -385,6 +385,30 @@ Save all three files. In your terminal, hit **`r`** for Hot Reload.
 
 ---
 
+## Common Mistakes
+
+### 1. Forgetting `await` before `Navigator.push(...)`
+* **The mistake**: Writing `Navigator.push(...)` without `await` inside `_openCourtDetails` or `_openMyBookings`.
+* **What you see**: `setState(() {})` runs immediately the millisecond the screen is pushed, rather than waiting for the user to return. Any new booking confirmed on the next screen won't be reflected in the AppBar badge until you leave and come back again.
+* **The fix**: Mark the method `async` and prefix the navigation call with `await`: `await Navigator.push(...)`.
+
+### 2. Calling `setState()` when the widget is no longer in the tree
+* **The mistake**: Calling `setState(() {})` after an `await` without checking if the user closed the app or navigated away.
+* **What you see**: In rare situations, Flutter prints: `setState() called after dispose()`.
+* **The fix**: Add `if (!mounted) return;` immediately following your `await Navigator.push(...)` line before calling `setState()`.
+
+### 3. Using `Badge.count` without a `child`
+* **The mistake**: Omitting the `child:` parameter in `Badge.count(...)`.
+* **What you see**: The bookmark icon disappears entirely, leaving an empty touch target in the AppBar.
+* **The fix**: Always provide the underlying icon as the `child`: `Badge.count(count: ..., child: const Icon(Icons.bookmark_outline))`.
+
+### 4. Navigating back with `Navigator.push` instead of `Navigator.pop`
+* **The mistake**: Trying to return to the home screen by calling `Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()))`.
+* **What you see**: The app creates a whole new instance of `HomeScreen` on top of the stack instead of returning to the existing one. The back button stack grows indefinitely, wasting memory.
+* **The fix**: To go back, always use `Navigator.pop(context)` or let Flutter's automatic AppBar back arrow handle it.
+
+---
+
 ## Checkpoint
 
 You can move to Step 08 once:

@@ -200,19 +200,26 @@ Look at your device or emulator:
 
 ---
 
-## Gotchas & Fixes
+## Common Mistakes
 
 ### 1. Missing Semicolon `;`
-* **Error**: `Expected to find ';'.`
-* **The fix**: In Dart, every regular statement must end with a semicolon `;`. Check the end of lines like `runApp(const CourtBookerApp());`.
+* **The mistake**: Forgetting the semicolon at the end of a statement, such as `runApp(const CourtBookerApp());`.
+* **What you see**: Dart flags `Expected to find ';'.` with red squiggly underlines.
+* **The fix**: Every statement in Dart must end with a semicolon `;`. Add `;` to the end of the line.
 
 ### 2. Missing Closing Parenthesis `)` or Bracket `}`
-* **Error**: `Expected '}' to match '{'.`
-* **The fix**: Widgets nest inside each other. Every `(` needs a matching `)`, and every `{` needs a matching `}`.
-* **Pro Tip:** Put a comma `,` after every closing parenthesis, then press `Shift+Option+F` (Mac) or `Shift+Alt+F` (Windows). VS Code will auto-format your code and make bracket matching obvious.
+* **The mistake**: Leaving an open `(` or `{` without a closing counterpart when nesting widgets like `Scaffold`, `AppBar`, and `MaterialApp`.
+* **What you see**: `Expected '}' to match '{'.`
+* **The fix**: Put a trailing comma `,` after every closing parenthesis, then format your document (press `Shift+Option+F` on Mac or `Shift+Alt+F` on Windows). Your editor will cleanly indent each nesting level so unmatched pairs become immediately obvious.
 
-### 3. Screen stays blank after saving
-* **The fix**: When editing `main()`, a simple reload (`r`) won't always pick up the changes. Hit **`R`** (capital R) in the terminal for a full Hot Restart.
+### 3. Screen stays blank or unchanged after saving
+* **The mistake**: Pressing lowercase `r` (Hot Reload) after modifying `main()` or changing the root widget class.
+* **The fix**: Hot Reload updates existing widget state, but changes to `main()` require a **Hot Restart**. Press **`R`** (capital R) in your terminal to re-execute `main()` from scratch.
+
+### 4. Forgetting the Material import
+* **The mistake**: Clearing `lib/main.dart` completely but forgetting to add `import 'package:flutter/material.dart';` on line 1.
+* **What you see**: Red squiggles under `StatelessWidget`, `Widget`, `BuildContext`, and `MaterialApp` with the error `Undefined class`.
+* **The fix**: Always ensure `import 'package:flutter/material.dart';` sits at the very top of any UI file in Flutter.
 
 ---
 

@@ -256,6 +256,30 @@ Save `court_details_screen.dart`. Hit **`r`** for Hot Reload.
 
 ---
 
+## Common Mistakes
+
+### 1. Forgetting `widget.` to access properties from the state class
+* **The mistake**: Trying to write `court.name` directly inside `_CourtDetailsScreenState`.
+* **What you see**: `Undefined name 'court'.`
+* **The fix**: `court` was passed into `CourtDetailsScreen`. Inside `_CourtDetailsScreenState`, access properties from the parent widget by prefixing them with `widget.`, e.g., `widget.court.name`.
+
+### 2. Forgetting `super.initState()`
+* **The mistake**: Leaving out `super.initState();` at the beginning of `initState()`.
+* **What you see**: Flutter analyzer warning or subtle framework lifecycle bugs where state isn't initialized properly.
+* **The fix**: The very first line inside any `initState()` method should always be `super.initState();`.
+
+### 3. Re-initializing `selectedDate` inside `build()`
+* **The mistake**: Writing `selectedDate = DateTime.now();` inside `Widget build(...)` instead of `initState()`.
+* **What you see**: Whenever the user selects a new date or slot, `setState()` triggers `build()`, which immediately resets `selectedDate` back to today!
+* **The fix**: Initialize default values once in `initState()`. That way, subsequent screen rebuilds will preserve the user's chosen date.
+
+### 4. `LateInitializationError`
+* **The mistake**: Declaring `late DateTime selectedDate;` but forgetting to set it inside `initState()`.
+* **What you see**: A red crash screen with `LateInitializationError: Field 'selectedDate' has not been initialized`.
+* **The fix**: Make sure `selectedDate = DateTime.now();` runs inside `initState()`.
+
+---
+
 ## Checkpoint
 
 You can move to Step 09 once:

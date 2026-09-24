@@ -243,6 +243,30 @@ Save `court_details_screen.dart`. Press **`r`** for Hot Reload.
 
 ---
 
+## Common Mistakes
+
+### 1. Popping the wrong `BuildContext`
+* **The mistake**: Calling `Navigator.pop(context)` instead of `Navigator.of(dialogContext).pop()`.
+* **What you see**: Instead of closing the confirmation dialog, Flutter pops the whole `CourtDetailsScreen` underneath, leaving an orphaned dialog or a black screen.
+* **The fix**: Use `dialogContext` (the context provided inside the `builder: (dialogContext) => ...` function) when dismissing dialogs.
+
+### 2. Using `push` instead of `pushReplacement`
+* **The mistake**: Navigating to `BookingsScreen` using `Navigator.push(...)`.
+* **What you see**: When the user reaches the "My Bookings" screen and hits the back button, they get dumped back into the booking form they just submitted with the same slot still selected!
+* **The fix**: Use `Navigator.of(context).pushReplacement(...)`. This removes the booking form from the back stack and replaces it with "My Bookings".
+
+### 3. Using deprecated `Scaffold.of` for SnackBars
+* **The mistake**: Writing `Scaffold.of(context).showSnackBar(...)`.
+* **What you see**: Deprecation warning or runtime crash: `Scaffold.of() called with a context that does not contain a Scaffold`.
+* **The fix**: Modern Flutter uses `ScaffoldMessenger.of(context).showSnackBar(...)`, which works safely across routes and dialogs.
+
+### 4. Forgetting `isLabelVisible` on the badge
+* **The mistake**: Leaving `isLabelVisible` at its default `true` on the home screen badge.
+* **What you see**: A badge with a `0` displayed when the app first launches and no bookings exist.
+* **The fix**: Set `isLabelVisible: sessionBookings.isNotEmpty` so the badge is completely hidden until at least one court is booked.
+
+---
+
 ## Checkpoint
 
 You can move to Step 12 once:

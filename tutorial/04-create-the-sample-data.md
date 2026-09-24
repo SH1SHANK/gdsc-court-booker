@@ -193,15 +193,21 @@ Zero errors. All seed data, active booking lists, and date tools are ready for t
 
 ---
 
-## Gotchas & Fixes
+## Common Mistakes
 
 ### 1. `Target of URI doesn't exist: '../models/court.dart'`
-* **What happened**: Typo in the import path, or `court.dart` is in the wrong directory.
-* **The fix**: Make sure the folder is named `models` (all lowercase) inside `lib/`.
+* **The mistake**: Typo in the relative import path, or `court.dart` was placed in the wrong folder.
+* **The fix**: Relative imports go up one folder with `../`. Verify that `lib/models/court.dart` exists, and make sure the directory name is lowercase `models`.
 
-### 2. `RangeError (index): Index out of range`
-* **What happened**: Forgetting the `- 1` when indexing `months` or `weekdays`.
-* **The fix**: In Dart, index `12` does not exist in a 12-item list (valid indices are `0` through `11`). Double-check that your code uses `date.month - 1` and `date.weekday - 1`.
+### 2. `RangeError (index): Index out of range` in date formatting
+* **The mistake**: Forgetting the `- 1` when indexing `months` or `weekdays` (e.g. `months[date.month]`).
+* **What you see**: The app crashes whenever December (month 12) or Sunday (weekday 7) is formatted.
+* **The fix**: Lists in Dart are 0-indexed. A 12-item list has indices from `0` to `11`. Always subtract 1: `months[date.month - 1]`.
+
+### 3. Declaring `sessionBookings` as `const` instead of `final`
+* **The mistake**: Writing `const List<Booking> sessionBookings = [];`.
+* **What you see**: Later when calling `sessionBookings.add(...)`, Dart crashes at runtime with: `Unsupported operation: Cannot add to an unmodifiable list`.
+* **The fix**: `const` creates a completely frozen, unmodifiable list. Use `final List<Booking> sessionBookings = [];`. With `final`, the variable cannot be reassigned, but items can still be added or removed from the list!
 
 ---
 
