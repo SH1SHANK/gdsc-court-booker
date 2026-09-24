@@ -39,6 +39,27 @@ Engineered with Flutter's core framework primitives, the application demonstrate
 
 ---
 
+## Workshop Tutorial Curriculum
+
+Looking for the step-by-step beginner tutorial? Follow the hands-on curriculum in the [`tutorial/`](tutorial/README.md) directory:
+* [Tutorial Master Guide](tutorial/README.md)
+* [Step 01: Create the Project](tutorial/01-create-the-project.md)
+* [Step 02: Build the App Shell](tutorial/02-build-the-app-shell.md)
+* [Step 03: Create the Domain Models](tutorial/03-create-the-domain-models.md)
+* [Step 04: Create the Sample Data & Helpers](tutorial/04-create-the-sample-data.md)
+* [Step 05: Build the Home Screen](tutorial/05-build-the-home-screen.md)
+* [Step 06: Extract the Court Card Widget](tutorial/06-extract-the-court-card-widget.md)
+* [Step 07: Add Navigation & AppBar Badge](tutorial/07-add-navigation-and-app-badge.md)
+* [Step 08: Build the Court Details Screen](tutorial/08-build-the-court-details-screen.md)
+* [Step 09: Add the Interactive Date Picker](tutorial/09-add-the-date-picker.md)
+* [Step 10: Build Interactive Slot Chips](tutorial/10-build-interactive-slot-chips.md)
+* [Step 11: Booking Confirmation Dialog](tutorial/11-booking-confirmation-dialog.md)
+* [Step 12: Build the My Bookings Screen](tutorial/12-build-the-my-bookings-screen.md)
+* [Step 13: Add Cancellation Safeguard](tutorial/13-add-cancellation-safeguard.md)
+* [Step 14: Architecture & Verification](tutorial/14-architecture-and-verification.md)
+
+---
+
 ## System Architecture
 
 The application adopts a modular, domain-driven layered architecture that cleanly separates presentation concerns, state management, and domain models.
